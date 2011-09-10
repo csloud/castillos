@@ -1,6 +1,7 @@
-function Castillos(){};
+function Castillos(){}
 
-var camera, scene, renderer, geometry, material, mesh;
+var THREE, window, requestAnimationFrame, 
+	camera, scene, renderer, geometry, material, mesh;
 
 Castillos.init = function(){
 	camera = new THREE.Camera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
