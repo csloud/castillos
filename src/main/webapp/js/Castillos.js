@@ -24,7 +24,7 @@ Castillos.init = function(){
 };
 
 Castillos.animate = function(){
-    requestAnimationFrame( this );
+    requestAnimationFrame( Castillos.animate );
     Castillos.render();
 };
 
