@@ -4,13 +4,11 @@ var Castillos = function(){
 	}
 };
 
-var THREE, window, requestAnimationFrame, PanController,
+var THREE, window, requestAnimationFrame, PerspectiveController,
 	camera, scene, renderer, geometry, material, mesh, projector;
 
 Castillos.prototype.init = function(){
 
-	PanController = new PanController(window);
-	
 	camera = new THREE.Camera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 1000;
 
@@ -29,7 +27,7 @@ Castillos.prototype.init = function(){
     
     scene.addObject( mesh );
 
-    this.initGrid();
+    //this.initGrid();
     
     renderer = new THREE.CanvasRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -38,6 +36,8 @@ Castillos.prototype.init = function(){
     document.body.appendChild( renderer.domElement );
     
     renderer.render( scene, camera );
+    
+    PerspectiveController = new PerspectiveController(window, renderer, camera, scene);
 };
 
 Castillos.prototype.initGrid = function() {
