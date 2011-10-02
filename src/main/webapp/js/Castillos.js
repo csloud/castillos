@@ -9,8 +9,9 @@ var THREE, window, requestAnimationFrame, PerspectiveController,
 
 Castillos.prototype.init = function(){
 
-	camera = new THREE.Camera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 1000;
+	//camera = new THREE.Camera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
+	//camera.position.z = 1000;
+	camera = this.initCamera();
 
 	projector = new THREE.Projector();
 	
@@ -21,23 +22,22 @@ Castillos.prototype.init = function(){
     material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
     
     mesh = new THREE.Mesh( geometry, material );
-    mesh.rotation.x = 0.50;
+    mesh.rotation.x = 0.10;
     mesh.rotation.y = 0.65;
-    mesh.position.x = 100;
+    mesh.position.z = -200;
     
     scene.addObject( mesh );
 
-    //this.initGrid();
+    this.initGrid();
     
     renderer = new THREE.CanvasRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     //TODO: can we have the renderer work with an existing element? 
     document.body.appendChild( renderer.domElement );
-    
+    camera.domelement = renderer.domElement ;
     renderer.render( scene, camera );
     
-    PerspectiveController = new PerspectiveController(window, renderer, camera, scene);
 };
 
 Castillos.prototype.initGrid = function() {
@@ -67,5 +67,32 @@ Castillos.prototype.initGrid = function() {
 	plane.rotation.x = 0.5;
 	scene.addObject( plane );
 };
+
+Castillos.prototype.initCamera = function() {
+	var camera = new THREE.TrackballCamera({
+        
+        fov: 25,
+        aspect: window.innerWidth / window.innerHeight,
+        near: 50,
+        far: 1e7,
+
+        rotateSpeed: 0.1,
+        zoomSpeed: 1.2,
+        panSpeed: 0.2,
+
+        noZoom: false,
+        noPan: false,
+
+        staticMoving: false,
+        dynamicDampingFactor: 0.3,
+
+        keys: [ 'A'.charCodeAt(0), 'S'.charCodeAt(0), 'D'.charCodeAt(0) ], // [ rotateKey, zoomKey, panKey ],
+
+    });
+    camera.position.y = 100;
+    camera.position.z = 800;
+    
+    return camera;
+}
 
 
